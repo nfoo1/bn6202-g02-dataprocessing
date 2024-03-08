@@ -1,7 +1,16 @@
 import numpy as np
 import csv
+import matplotlib.pyplot as plt
+
+#################################
+### DATA PROCESSING FUNCTIONS ###
+#################################
 
 def interpolate_to_501_points(input_list):
+    # Use is to allow averaging of trials of different durations
+    # 501 chosen as len([0.0, 0.2, 0.4, ..., 99.8, 100.0) == 500
+    # Allows normalisation to 100% gait cycle
+
     # Convert input list to numpy array for easier manipulation
     input_array = np.array(input_list, dtype=float)
 
@@ -19,12 +28,9 @@ def interpolate_to_501_points(input_list):
 
     return interpolated_values
 
-# # Example usage:
-# input_list = [1, 2, np.nan, 4, 5, np.nan, 7, 8]  # Example list with NaN for missing values
-# interpolated_values = interpolate_to_501_points(input_list)
-# print(interpolated_values)
-
 def csv_to_list(file_path):
+    # Simply converts a single-column csv to a 1-D list
+
     data_list = []
     with open(file_path, 'r') as file:
         csv_reader = csv.reader(file)
@@ -35,15 +41,33 @@ def csv_to_list(file_path):
     return data_list
 
 def list_to_csv(input_list, file_path):
+    # Simply saves a single-column csv file, given a 1-D list
+
     with open(file_path, 'w', newline='') as file:
         csv_writer = csv.writer(file)
         for item in input_list:
             csv_writer.writerow([item])
 
-# Example usage:
-input_file = '/Users/nigelfoo/Documents/low knee nigel 3.csv'  # Change this to your input CSV file path
-output_file = '/Users/nigelfoo/Documents/low knee nigel 3 interpolated.csv' # Change this to your output CSV file path 
-data_list = csv_to_list(input_file)
-processed = interpolate_to_501_points(data_list)
-list_to_csv(processed, output_file)
-print("List written to CSV file:", output_file)
+def data_processing_single_column(input_file, output_file):
+    data_list = csv_to_list(input_file)
+    processed_data = interpolate_to_501_points(data_list)
+    list_to_csv(processed_data, output_file)
+    print('List written to CSV file: ', output_file)
+
+
+
+##########################
+### PLOTTING FUNCTIONS ###
+##########################
+
+# Notes:
+# For line-plots, ensure x-axis scale is from 0% - 100%, x-axis label is 'Percentage of Gait Cycle'
+#   - Trunk angle: y-axis flexion/extension, scale tbd
+#   - Hip angle: y-axis flexion/extension, scale tbd
+#   - Knee angle: y-axis flexion/extension, scale tbd
+#   - Ankle angle: y-axis flexion/extension, scale tbd
+# For bar-plots, TBDAOSICBCOISN
+
+def individual_line_plot():
+    pass
+
