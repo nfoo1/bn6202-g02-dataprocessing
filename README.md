@@ -3,8 +3,8 @@
 Note: You can set up a virtual environment, but not really needed I guess...
 
 ## Libraries Required
-numpy
-matplotlib
+- numpy
+- matplotlib
 
 ## How to Use
 
