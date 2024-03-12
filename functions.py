@@ -59,14 +59,19 @@ def raw_data_processing(input_file, output_file, save_file = False):
     column2_processed = interpolate_to_501_points(column2)
     column3_processed = interpolate_to_501_points(column3)
 
+    # Creating an average column:
+    column_average = []
+    for i in range(len(column1_processed)):
+        column_average.append((column1_processed[i]+column2_processed[i]+column3_processed[i])/3)
+
     # Write processed data to the output CSV file, if needed
     if save_file == True:
         with open(output_file, 'w', newline='') as file:
             csv_writer = csv.writer(file)
-            for values in zip(column1_processed, column2_processed, column3_processed):
+            for values in zip(column1_processed, column2_processed, column3_processed, column_average):
                 csv_writer.writerow(values)
 
-    return column1_processed, column2_processed, column3_processed
+    return column1_processed, column2_processed, column3_processed, column_average
 
 
 ##########################
@@ -90,6 +95,6 @@ def individual_line_plot():
 ### WORKING SPACE ###
 #####################
 
-# raw_data_processing('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw/01_ST_HIGH_HIP.csv', 
-#            '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_HIGH_HIP_INTERPOLATED.csv', True)
+raw_data_processing('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw/01_ST_LOW_TRUNK.csv', 
+           '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_LOW_TRUNK_INTERPOLATED.csv', True)
 
