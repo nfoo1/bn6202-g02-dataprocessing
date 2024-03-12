@@ -28,32 +28,45 @@ def interpolate_to_501_points(input_list):
 
     return interpolated_values
 
-def csv_to_list(file_path):
-    # Simply converts a single-column csv to a 1-D list
+def raw_data_processing(input_file, output_file, save_file = False):
+    # Function processes data of 3 trials for a single participant at a single bag placement
 
-    data_list = []
-    with open(file_path, 'r') as file:
+    # Lists to store the data from each column
+    column1 = []
+    column2 = []
+    column3 = []
+
+    # Read data from the input CSV file
+    with open(input_file, 'r') as file:
         csv_reader = csv.reader(file)
         next(csv_reader)  # Skip the header if it exists
         for row in csv_reader:
-            for value in row:
-                data_list.append(float(value))  # Convert to float if necessary
-    return data_list
+            # Convert values from string to float if necessary
+            value1 = float(row[0]) if row[0] else None
+            value2 = float(row[1]) if row[1] else None
+            value3 = float(row[2]) if row[2] else None
 
-def list_to_csv(input_list, file_path):
-    # Simply saves a single-column csv file, given a 1-D list
+            # Append non-null values to respective lists
+            if value1 is not None:
+                column1.append(value1)
+            if value2 is not None:
+                column2.append(value2)
+            if value3 is not None:
+                column3.append(value3)
 
-    with open(file_path, 'w', newline='') as file:
-        csv_writer = csv.writer(file)
-        for item in input_list:
-            csv_writer.writerow([item])
+    # Apply interpolation function to each list
+    column1_processed = interpolate_to_501_points(column1)
+    column2_processed = interpolate_to_501_points(column2)
+    column3_processed = interpolate_to_501_points(column3)
 
-def data_processing_single_column(input_file, output_file):
-    data_list = csv_to_list(input_file)
-    processed_data = interpolate_to_501_points(data_list)
-    list_to_csv(processed_data, output_file)
-    print('List written to CSV file: ', output_file)
+    # Write processed data to the output CSV file, if needed
+    if save_file == True:
+        with open(output_file, 'w', newline='') as file:
+            csv_writer = csv.writer(file)
+            for values in zip(column1_processed, column2_processed, column3_processed):
+                csv_writer.writerow(values)
 
+    return column1_processed, column2_processed, column3_processed
 
 
 ##########################
@@ -70,4 +83,13 @@ def data_processing_single_column(input_file, output_file):
 
 def individual_line_plot():
     pass
+
+
+
+#####################
+### WORKING SPACE ###
+#####################
+
+# raw_data_processing('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw/01_ST_HIGH_HIP.csv', 
+#            '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_HIGH_HIP_INTERPOLATED.csv', True)
 

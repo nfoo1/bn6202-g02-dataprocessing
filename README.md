@@ -6,6 +6,6 @@ Note: You can set up a virtual environment, but not really needed I guess...
 - numpy
 - matplotlib
 
-## How to Use
-
-
+## How it Works
+- Data of different lengths are all interpolated to maintain data, while providing a standardised number of datapoints to allow averaging of datapoints
+- 
