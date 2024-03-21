@@ -95,6 +95,6 @@ def individual_line_plot():
 ### WORKING SPACE ###
 #####################
 
-raw_data_processing('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw/01_ST_LOW_TRUNK.csv', 
-           '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_LOW_TRUNK_INTERPOLATED.csv', True)
+raw_data_processing('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw/01_ST_CONTROL_ANKLE.csv', 
+           '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_CONTROL_ANKLE_INTERPOLATED.csv', True)
 
