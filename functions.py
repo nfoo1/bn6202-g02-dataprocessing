@@ -266,59 +266,6 @@ def individual_line_plot(average_list, std_deviation_list, save_path, title, xla
     print(f"Plot saved at: {save_path}")
 
 def batch_individual_line_plots():
-    # CONTROL KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'KNEE', 'CONTROL', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_CONTROL_KNEE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_CONTROL_KNEE.png', 'Average Knee Joint Angle - Control', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
-    # HIGH KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'KNEE', 'HIGH', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_HIGH_KNEE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_HIGH_KNEE.png', 'Average Knee Joint Angle - High', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
-    # MEDIUM KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'KNEE', 'MEDIUM', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_MEDIUM_KNEE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_MEDIUM_KNEE.png', 'Average Knee Joint Angle - Medium', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
-    # LOW KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'KNEE', 'LOW', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_LOW_KNEE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_LOW_KNEE.png', 'Average Knee Joint Angle - Low', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
-
-    # CONTROL HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'HIP', 'CONTROL', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_CONTROL_HIP.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_CONTROL_HIP.png', 'Average Hip Joint Angle - Control', 'Percentage of Gait Cycle (%)', 'Hip Flexion Angle (deg)')
-    # HIGH HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'HIP', 'HIGH', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_HIGH_HIP.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_HIGH_HIP.png', 'Average Hip Joint Angle - High', 'Percentage of Gait Cycle (%)', 'Hip Flexion Angle (deg)')
-    # MEDIUM HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'HIP', 'MEDIUM', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_MEDIUM_HIP.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_MEDIUM_HIP.png', 'Average Hip Joint Angle - Medium', 'Percentage of Gait Cycle (%)', 'Hip Flexion Angle (deg)')
-    # LOW HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'HIP', 'LOW', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_LOW_HIP.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_LOW_HIP.png', 'Average Hip Joint Angle - Low', 'Percentage of Gait Cycle (%)', 'Hip Flexion Angle (deg)')
-
-    # CONTROL ANKLE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'ANKLE', 'CONTROL', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_CONTROL_ANKLE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_CONTROL_ANKLE.png', 'Average Ankle Joint Angle - Control', 'Percentage of Gait Cycle (%)', 'Ankle Plantarlexion Angle (deg)')
-    # HIGH KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'ANKLE', 'HIGH', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_HIGH_ANKLE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_HIGH_ANKLE.png', 'Average Ankle Joint Angle - High', 'Percentage of Gait Cycle (%)', 'Ankle Plantarlexion Angle (deg)')
-    # MEDIUM KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'ANKLE', 'MEDIUM', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_MEDIUM_ANKLE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_MEDIUM_ANKLE.png', 'Average Ankle Joint Angle - Medium', 'Percentage of Gait Cycle (%)', 'Ankle Plantarlexionn Angle (deg)')
-    # LOW KNEE
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'ANKLE', 'LOW', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_LOW_ANKLE.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_LOW_ANKLE.png', 'Average Ankle Joint Angle - Low', 'Percentage of Gait Cycle (%)', 'Ankle Plantarlexion Angle (deg)')
-
-    # CONTROL TRUNK
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'TRUNK', 'CONTROL', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_CONTROL_TRUNK.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_CONTROL_TRUNK.png', 'Average Trunk Joint Angle - Control', 'Percentage of Gait Cycle (%)', 'Trunk Flexion Angle (deg)')
-    # HIGH HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'TRUNK', 'HIGH', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_HIGH_TRUNK.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_HIGH_TRUNK.png', 'Average Trunk Joint Angle - High', 'Percentage of Gait Cycle (%)', 'Trunk Flexion Angle (deg)')
-    # MEDIUM HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'TRUNK', 'MEDIUM', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_MEDIUM_TRUNK.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_MEDIUM_TRUNK.png', 'Average Trunk Joint Angle - Medium', 'Percentage of Gait Cycle (%)', 'Trunk Flexion Angle (deg)')
-    # LOW HIP
-    average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'TRUNK', 'LOW', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_LOW_TRUNK.csv')
-    individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_LOW_TRUNK.png', 'Average Trunk Joint Angle - Low', 'Percentage of Gait Cycle (%)', 'Trunk Flexion Angle (deg)')
-
-def batch_individual_line_plots_1():
     joints = ['KNEE', 'HIP', 'ANKLE', 'TRUNK']
     levels = ['CONTROL', 'HIGH', 'MEDIUM', 'LOW']
 
@@ -355,10 +302,10 @@ def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel
 #####################
 
 # # Run if needed
-rawdata_batch_interpolation()
+# rawdata_batch_interpolation()
 
 # LINE PLOTS
-batch_individual_line_plots_1()
+# batch_individual_line_plots()
 
 
 # folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
