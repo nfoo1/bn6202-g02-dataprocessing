@@ -48,10 +48,17 @@ def interpolate_to_501_points(input_list):
 
     return interpolated_values
 
+
 def raw_data_processing(input_files):
+    # Define the output folder path
+    output_folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+
     # Function processes data of 3 trials for a single participant at a single bag placement
     for input_file in input_files:
-        output_file = os.path.splitext(input_file)[0] + '_INTERPOLATED.csv'
+        # Extract filename from input_file path
+        filename = os.path.basename(input_file)
+        # Generate output file path with the new folder and interpolated suffix
+        output_file = os.path.join(output_folder, os.path.splitext(filename)[0] + '_INTERPOLATED.csv')
 
         # Lists to store the data from each column
         column1 = []
@@ -59,7 +66,7 @@ def raw_data_processing(input_files):
         column3 = []
 
         # Read data from the input CSV file
-        with open(input_file, 'r') as file:
+        with open(input_file, 'r', encoding='utf-8-sig') as file:
             csv_reader = csv.reader(file)
             next(csv_reader)  # Skip the header if it exists
             for row in csv_reader:
@@ -143,15 +150,6 @@ def individual_line_plot():
 ### WORKING SPACE ###
 #####################
 
-# raw_data_processing('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw/01_ST_CONTROL_ANKLE.csv', 
-#            '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_CONTROL_ANKLE_INTERPOLATED.csv', True)
-
-# knee_list = ['/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated/01_ST_CONTROL_KNEE_INTERPOLATED.csv']
-
-# knee_angle_max_list(knee_list, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_angles_swingphase.csv')
-
 folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw'
 files_list = list_csv_files_in_folder(folder)
-# print(files_list)
-
 raw_data_processing(files_list)
