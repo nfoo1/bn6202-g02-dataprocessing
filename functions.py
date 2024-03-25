@@ -33,7 +33,6 @@ def list_csv_files_in_folder(folder_path, include_all=True, keyword1=None, keywo
     
     return csv_file_paths
 
-
 def interpolate_to_501_points(input_list):
     # Use is to allow averaging of trials of different durations
     # 501 chosen as len([0.0, 0.2, 0.4, ..., 99.8, 100.0) == 500
@@ -55,7 +54,6 @@ def interpolate_to_501_points(input_list):
     interpolated_values = interpolation_func(output_indices, non_empty_indices, input_array[non_empty_indices])
 
     return interpolated_values
-
 
 def raw_data_processing(input_files):
     # Define the output folder path
@@ -118,7 +116,62 @@ def ankle_process(csv_files):
             df.to_csv(csv_file, header=False, index=False)
             print(f"Processed: {csv_file}")
 
+def combine_csv(folder_path, term1, term2, combined_file_path):
+    avg_list = []
+    std_dev_list = []
 
+    # Search for CSV files with specified search terms
+    filtered_files = [f for f in os.listdir(folder_path) if f.endswith('.csv') and term1 in f and term2 in f]
+
+    if not filtered_files:
+        print("No matching CSV files found.")
+        return [], []
+
+    # Initialize list to store data from filtered files
+    combined_data = []
+
+    # Iterate through filtered files
+    for file_name in filtered_files:
+        file_path = os.path.join(folder_path, file_name)
+
+        with open(file_path, 'r') as csv_file:
+            csv_reader = csv.reader(csv_file)
+            data = list(csv_reader)
+
+        # Append data from filtered file to combined data list
+        combined_data.append(data)
+
+    # Transpose combined data to stack horizontally
+    combined_data = np.array(combined_data).transpose((1, 0, 2))
+
+    # Initialize list to store row averages and standard deviations
+    row_avg_list = []
+    row_std_dev_list = []
+
+    # Iterate through rows in combined data
+    for row in combined_data:
+        # Convert row values to float
+        row_values = np.array(row).astype(float)
+
+        # Calculate row average and standard deviation
+        row_avg = np.mean(row_values)
+        row_std_dev = np.std(row_values, ddof=1)
+
+        # Append row average and standard deviation to respective lists
+        row_avg_list.append(row_avg)
+        row_std_dev_list.append(row_std_dev)
+
+    # Write combined data to a new CSV file
+    with open(combined_file_path, 'w', newline='') as combined_file:
+        csv_writer = csv.writer(combined_file)
+
+        # Write combined data rows without header
+        for i in range(len(combined_data)):
+            combined_row = combined_data[i].flatten().tolist()
+            combined_row += [row_avg_list[i], row_std_dev_list[i]]
+            csv_writer.writerow(combined_row)
+
+    return row_avg_list, row_std_dev_list
 
 def minmax_angle_list(file_list, start_row, end_row, output_file, search_type='max'):
     result_list = []
@@ -168,8 +221,35 @@ def minmax_angle_list(file_list, start_row, end_row, output_file, search_type='m
 #   - Ankle angle: y-axis flexion/extension, scale tbd
 # For bar-plots, TBDAOSICBCOISN
 
-def individual_line_plot():
-    pass
+
+def save_plot_with_error(average_list, std_deviation_list, save_path, title, xlabel, ylabel):
+    # Convert lists to numpy arrays
+    average_list = np.array(average_list)
+    std_deviation_list = np.array(std_deviation_list)
+
+    # Generating x values
+    x_values = np.arange(0, 100.1, 0.2)  # 501 values from 0 to 100 (inclusive)
+
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_values, average_list, color='blue', label='Average')
+    plt.fill_between(x_values, average_list - std_deviation_list, average_list + std_deviation_list, color='lightblue', label='Standard Deviation')
+
+    # Adding labels and title
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(title)
+    plt.legend()
+
+    # Setting x-axis range
+    plt.xlim(0, 100)
+
+    # Display grid
+    plt.grid(True)
+
+    # Save the plot
+    plt.savefig(save_path, dpi=600)
+    print(f"Plot saved at: {save_path}")
 
 def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel='Y-axis'):
     # Read CSV file
@@ -197,17 +277,22 @@ def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel
 ### WORKING SPACE ###
 #####################
 
-# Performing data processing (probably can run each time without wasting THAT much time and computing power)
-folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw'
-files_list = list_csv_files_in_folder(folder, True)
-raw_data_processing(files_list)
-anklefolder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
-ankle_files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'ANKLE')
-ankle_process(ankle_files_list)
+# # Performing data processing (probably can run each time without wasting THAT much time and computing power)
+# # Or you can perform this each time data_raw is updated
+
+# folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw'
+# files_list = list_csv_files_in_folder(folder, True)
+# raw_data_processing(files_list)
+# anklefolder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+# ankle_files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'ANKLE')
+# ankle_process(ankle_files_list)
+
+average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', 'KNEE', 'CONTROL', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_CONTROL_KNEE_NOHEADER.csv')
+print(type(stdev))
+individual_line_plot(average, stdev, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_CONTROL_KNEE.png')
+
+
 
 # folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
 # files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
-
-
-
 # create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
