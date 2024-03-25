@@ -2,19 +2,23 @@ import numpy as np
 import csv
 import matplotlib.pyplot as plt
 import os
+import pandas as pd
 
 #################################
 ### DATA PROCESSING FUNCTIONS ###
 #################################
 
 
-def list_csv_files_in_folder(folder_path):
+def list_csv_files_in_folder(folder_path, include_all=True, keyword1=None, keyword2=None):
     """
     Inputs:
     - folder_path: A string representing the path to the folder
+    - include_all: A boolean indicating whether to include all CSV files or filter by keywords (default: True)
+    - keyword1: The first keyword to filter by (default: None)
+    - keyword2: The second keyword to filter by (default: None)
     
     Outputs:
-    - A list containing the pathnames of all CSV files within the folder
+    - A list containing the pathnames of CSV files within the folder that match the specified criteria
     """
     csv_file_paths = []  # Initialize an empty list to store CSV file paths
     
@@ -22,9 +26,13 @@ def list_csv_files_in_folder(folder_path):
     for root, dirs, files in os.walk(folder_path):
         for file in files:
             if file.endswith(".csv"):
-                csv_file_paths.append(os.path.join(root, file))  # Append the CSV file path to the list
+                if include_all:
+                    csv_file_paths.append(os.path.join(root, file))  # Append the CSV file path to the list
+                elif keyword1 and keyword2 and (keyword1 in file) and (keyword2 in file):
+                    csv_file_paths.append(os.path.join(root, file))  # Append the CSV file path to the list
     
     return csv_file_paths
+
 
 def interpolate_to_501_points(input_list):
     # Use is to allow averaging of trials of different durations
@@ -96,36 +104,57 @@ def raw_data_processing(input_files):
 
         print(f"Processed data saved to: {output_file}")
 
-def knee_angle_max_list(csv_files, output_file='max_values.csv'):
-    max_list = []
+def ankle_process(csv_files):
+    for csv_file in csv_files:
+        # Check if the file exists
+        if os.path.exists(csv_file):
+            # Read the CSV file into a DataFrame
+            df = pd.read_csv(csv_file, header=None)
+            
+            # Perform the operation (90 - value) for each value in the DataFrame
+            df = 90 - df
+            
+            # Write the new DataFrame back to the CSV file
+            df.to_csv(csv_file, header=False, index=False)
+            print(f"Processed: {csv_file}")
 
-    # Iterate through each CSV file
-    for file_path in csv_files:
-        with open(file_path, 'r') as csv_file:
-            reader = csv.reader(csv_file)
-            next(reader)  # Skip header if present
 
-            # Initialize maximum values for each column
-            max_values = [-float('inf')] * 3
+
+def minmax_angle_list(file_list, start_row, end_row, output_file, search_type='max'):
+    result_list = []
+
+    for file_name in file_list:
+        with open(file_name, 'r') as csv_file:
+            csv_reader = csv.reader(csv_file)
+            next(csv_reader)  # Skip header row if exists
+            
+            # Initialize values based on search_type
+            if search_type == 'max':
+                values = [-float('inf')] * 501
+                comparison_func = max
+            elif search_type == 'min':
+                values = [float('inf')] * 501
+                comparison_func = min
+            else:
+                raise ValueError("Invalid search_type. Use 'max' or 'min'.")
 
             # Iterate through each row in the CSV file
-            for row in reader:
-                # Extract data from each column
-                for col_index in range(3):
-                    # Update maximum value for each column
-                    value = float(row[col_index])
-                    if value > max_values[col_index]:
-                        max_values[col_index] = value
+            for i, row in enumerate(csv_reader):
+                # Check if the current row is within the specified range
+                if start_row <= i <= end_row:
+                    # Update values with the maximum or minimum values found in the current row
+                    values = [comparison_func(cur_val, float(val)) for cur_val, val in zip(values, row)]
+            
+            # Extend result_list with the values from the current file
+            result_list.extend(values)
 
-            # Append maximum values for indices 201 to 501
-            max_list.extend(max_values)
+    # Write result_list to the specified output file as a single column
+    with open(output_file, 'w', newline='') as output_csv:
+        csv_writer = csv.writer(output_csv)
+        csv_writer.writerows([[val] for val in result_list])
 
-    # Save max_list as a CSV file with values in a single column
-    with open(output_file, 'w', newline='') as output_file:
-        writer = csv.writer(output_file)
-        writer.writerow(max_list)
+    return result_list
 
-    return max_list
 
 ##########################
 ### PLOTTING FUNCTIONS ###
@@ -142,7 +171,25 @@ def knee_angle_max_list(csv_files, output_file='max_values.csv'):
 def individual_line_plot():
     pass
 
-
+def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel='Y-axis'):
+    # Read CSV file
+    df = pd.read_csv(csv_file)
+    
+    # Extract data from columns
+    data = [df[col].dropna() for col in df.columns]
+    
+    # Create boxplot
+    plt.figure(figsize=(10, 6))  # Adjust figure size as needed
+    plt.boxplot(data, labels=df.columns, patch_artist=True, boxprops=dict(facecolor='white', color='black'), whiskerprops=dict(color='black'), capprops=dict(color='black'), medianprops=dict(color='black'))
+    
+    # Customize plot
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.grid(False)
+    
+    # Save plot as PNG at 600 dpi
+    plt.savefig(save_path, dpi=600, bbox_inches='tight', facecolor='white')
 
 
 
@@ -150,6 +197,17 @@ def individual_line_plot():
 ### WORKING SPACE ###
 #####################
 
+# Performing data processing (probably can run each time without wasting THAT much time and computing power)
 folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_raw'
-files_list = list_csv_files_in_folder(folder)
+files_list = list_csv_files_in_folder(folder, True)
 raw_data_processing(files_list)
+anklefolder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+ankle_files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'ANKLE')
+ankle_process(ankle_files_list)
+
+# folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+# files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
+
+
+
+# create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
