@@ -275,6 +275,53 @@ def batch_individual_line_plots():
             average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', joint, level, path)
             individual_line_plot(average, stdev, f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_{level}_{joint}.png', f'Average {joint.capitalize()} Joint Angle - {level.capitalize()}', 'Percentage of Gait Cycle (%)', f'{joint.capitalize()} Flexion Angle (deg)')
 
+def longitudinal_comparison(folder_path, joint_descriptor, save_filepath, title="Line Plot", x_label="X", y_label="Y"):
+    # Search for CSV files containing the specified joint descriptor
+    csv_files = [file for file in os.listdir(folder_path) if file.startswith('LONGITUDINAL_') and joint_descriptor in file]
+    
+    # Ensure there are exactly four CSV files
+    if len(csv_files) != 4:
+        print("Error: There should be exactly four CSV files matching the joint descriptor.")
+        return
+    
+    # Define colors for different types of data
+    colors = {'CONTROL': 'blue', 'HIGH': 'green', 'MEDIUM': 'orange', 'LOW': 'purple'}
+    
+    # Initialize a matplotlib figure
+    fig, ax = plt.subplots()
+
+    # Setting x-axis to 0-100% gait cycle, and limiting the limits of x-axis.
+    x_vals = np.arange(0, 100, 0.2)
+    ax.set_xlim(0, 100)
+    
+    # Iterate over each CSV file
+    for idx, file in enumerate(csv_files):
+        # Read CSV file
+        df = pd.read_csv(os.path.join(folder_path, file))
+        # Extract relevant columns (last two columns)
+        avg_column = df.iloc[:, -2]
+        std_dev_column = df.iloc[:, -1]
+        # Extract type of data (CONTROL, HIGH, MEDIUM, LOW)
+        data_type = file.split('_')[1]
+        # Plot average line
+        ax.plot(x_vals, avg_column, color=colors[data_type], label=data_type)
+        # Shaded area for stdev
+        # ax.fill_between(x_vals, avg_column - std_dev_column, avg_column + std_dev_column, alpha=0.2, color=colors[data_type])
+    
+    # Set plot title and axis labels
+    ax.set_title(title)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    
+    # Add legend
+    ax.legend()
+    
+    # Save plot as PNG file at 600 dpi
+    plt.savefig(save_filepath, dpi=600)
+    
+    # Show plot
+    plt.show()
+
 def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel='Y-axis'):
     # Read CSV file
     df = pd.read_csv(csv_file)
@@ -301,12 +348,16 @@ def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel
 ### WORKING SPACE ###
 #####################
 
-# # Run if needed
+# Run if needed
 # rawdata_batch_interpolation()
 
-# LINE PLOTS
+# Batch individual line plots
 # batch_individual_line_plots()
 
+# Longitudinal Comparison
+# longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', 'KNEE', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGI TUDINAL_KNEE.png', 'Knee Joint Angles', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
+longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='KNEE',
+              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_KNEE.png', title='Knee Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Knee Flexion Angle (deg)')
 
 # folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
 # files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
