@@ -271,9 +271,9 @@ def batch_individual_line_plots():
 
     for joint in joints:
         for level in levels:
-            path = f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_{level}_{joint}.csv'
+            path = f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/LONGITUDINAL_{joint}_{level}.csv'
             average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', joint, level, path)
-            individual_line_plot(average, stdev, f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_{level}_{joint}.png', f'Average {joint.capitalize()} Joint Angle - {level.capitalize()}', 'Percentage of Gait Cycle (%)', f'{joint.capitalize()} Flexion Angle (deg)')
+            individual_line_plot(average, stdev, f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_{joint}_{level}.png', f'Average {joint.capitalize()} Joint Angle - {level.capitalize()}', 'Percentage of Gait Cycle (%)', f'{joint.capitalize()} Flexion Angle (deg)')
 
 def longitudinal_comparison(folder_path, joint_descriptor, save_filepath, title="Line Plot", x_label="X", y_label="Y"):
     # Search for CSV files containing the specified joint descriptor
@@ -357,13 +357,13 @@ batch_individual_line_plots()
 # Longitudinal Comparison
 # longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', 'KNEE', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGI TUDINAL_KNEE.png', 'Knee Joint Angles', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
 longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='KNEE',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_KNEE.png', title='Knee Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Knee Flexion Angle (deg)')
+              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_LONGITUDINAL_KNEE.png', title='Knee Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Knee Flexion Angle (deg)')
 longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='HIP',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_HIP.png', title='Hip Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Hip Flexion Angle (deg)')
+              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_LONGITUDINAL_HIP.png', title='Hip Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Hip Flexion Angle (deg)')
 longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='TRUNK',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_TRUNK.png', title='Trunk Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Trunk Flexion Angle (deg)')
+              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_LONGITUDINAL_TRUNK.png', title='Trunk Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Trunk Flexion Angle (deg)')
 longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='ANKLE',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_ANKLE.png', title='Ankle Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Ankle Dorsiflexion Angle (deg)')
+              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_LONGITUDINAL_ANKLE.png', title='Ankle Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Ankle Dorsiflexion Angle (deg)')
 
 folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
 files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
