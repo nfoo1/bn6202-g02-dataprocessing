@@ -308,7 +308,6 @@ def batch_individual_line_plots():
             filename = f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_{joint}_{level}.png'
             individual_line_plot(average, stdev, filename, f'Average {joint.capitalize()} Joint Angle - {level.capitalize()}', 'Percentage of Gait Cycle (%)', f'{joint.capitalize()} Flexion Angle (deg)')
 
-
 def batch_individual_line_plots_trunk():
     joints = ['TRUNK']
     levels = ['CONTROL', 'HIGH', 'MEDIUM', 'LOW']
@@ -319,7 +318,6 @@ def batch_individual_line_plots_trunk():
             average, stdev = combine_csv('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated', joint, level, path)
             filename = f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGITUDINAL_{joint}_{level}.png'
             individual_line_plot_trunk(average, stdev, filename, f'Average {joint.capitalize()} Joint Angle - {level.capitalize()}', 'Percentage of Gait Cycle (%)', f'{joint.capitalize()} Flexion Angle (deg)')
-
 
 def longitudinal_comparison(folder_path, joint_descriptor, save_filepath, title="Line Plot", x_label="X", y_label="Y"):
     # Search for CSV files containing the specified joint descriptor
@@ -381,6 +379,27 @@ def longitudinal_comparison(folder_path, joint_descriptor, save_filepath, title=
     # plt.show()
     plt.close()
 
+def batch_logitudinal_comparison():
+    joints = ['KNEE', 'HIP', 'TRUNK', 'ANKLE']
+
+    for joint in joints:
+        if joint == 'TRUNK':
+            y_label = 'Trunk Flexion Angle (deg)'
+        elif joint == 'ANKLE':
+            y_label = 'Ankle Plantarflexion Angle (deg)'
+        else:
+            y_label = f'{joint.capitalize()} Flexion Angle (deg)'
+        
+        save_filepath = f'/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_{joint}.png'
+        title = f'{joint.capitalize()} Joint Angles'
+
+        longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled',
+                                joint_descriptor=joint,
+                                save_filepath=save_filepath,
+                                title=title,
+                                x_label='Percentage of Gait Cycle (%)',
+                                y_label=y_label)
+
 def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel='Y-axis'):
     # Read CSV file
     df = pd.read_csv(csv_file)
@@ -403,7 +422,6 @@ def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel
     plt.close()
 
 
-
 #####################
 ### WORKING SPACE ###
 #####################
@@ -411,21 +429,21 @@ def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel
 # Run if needed
 rawdata_batch_interpolation()
 
-# Batch individual line plots
+# Batch longitudinal plots
 batch_individual_line_plots()
 batch_individual_line_plots_trunk()
 
-# Longitudinal Comparison
-# longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', 'KNEE', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/LONGI TUDINAL_KNEE.png', 'Knee Joint Angles', 'Percentage of Gait Cycle (%)', 'Knee Flexion Angle (deg)')
-longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='KNEE',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_KNEE.png', title='Knee Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Knee Flexion Angle (deg)')
-longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='HIP',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_HIP.png', title='Hip Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Hip Flexion Angle (deg)')
-longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='TRUNK',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_TRUNK.png', title='Trunk Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Trunk Flexion Angle (deg)')
-longitudinal_comparison('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled', joint_descriptor='ANKLE',
-              save_filepath='/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/COMPARISON_ANKLE.png', title='Ankle Joint Angles', x_label='Percentage of Gait Cycle (%)', y_label='Ankle Plantarlexion Angle (deg)')
+# Batch comparison plots
+batch_logitudinal_comparison()
 
 folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'CONTROL')
+minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_control.csv', 'max')
 files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
+minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_high.csv', 'max')
+files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'MEDIUM')
+minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_medium.csv', 'max')
+files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'LOW')
+minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_low.csv', 'max')
+
 create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
