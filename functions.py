@@ -74,7 +74,7 @@ def raw_data_processing(input_files):
         # Read data from the input CSV file
         with open(input_file, 'r', encoding='utf-8-sig') as file:
             csv_reader = csv.reader(file)
-            next(csv_reader)  # Skip the header if it exists
+            # next(csv_reader)  # Skip the header if it exists
             for row in csv_reader:
                 # Convert values from string to float if necessary
                 value1 = float(row[0]) if row[0] else None
@@ -422,28 +422,123 @@ def create_boxplot(csv_file, save_path, title='Boxplot', xlabel='X-axis', ylabel
     plt.close()
 
 
+####################
+# PROCESSING SPACE #
+####################
+
+def knee_max_swing_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'CONTROL')
+    minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_control.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
+    minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_high.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'MEDIUM')
+    minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_medium.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'LOW')
+    minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_low.csv', 'max')
+
+def knee_max_stance_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'CONTROL')
+    minmax_angle_list(files_list, 0, 300, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_stancephase_control.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
+    minmax_angle_list(files_list, 0, 300, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_stancephase_high.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 300, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_stancephase_medium.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'LOW')
+    minmax_angle_list(files_list, 0, 300, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_stancephase_low.csv', 'max')
+
+def hip_max_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'CONTROL')
+    minmax_angle_list(files_list, 0, 200, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_hip_control.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'HIGH')
+    minmax_angle_list(files_list, 0, 200, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_hip_high.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 200, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_hip_medium.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'LOW')
+    minmax_angle_list(files_list, 0, 200, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_hip_low.csv', 'max')
+
+def hip_min_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'CONTROL')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_hip_control.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'HIGH')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_hip_high.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_hip_medium.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'HIP', 'LOW')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_hip_low.csv', 'min')
+
+
+def ankle_toeoff_max_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'CONTROL')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_ankle_control.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'HIGH')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_ankle_high.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_ankle_medium.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'LOW')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_ankle_low.csv', 'max')
+
+def ankle_toeoff_min_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'CONTROL')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_ankle_control.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'HIGH')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_ankle_high.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_ankle_medium.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'ANKLE', 'LOW')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_ankle_low.csv', 'min')
+
+def trunk_min_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'CONTROL')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_trunk_control.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'HIGH')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_trunk_high.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_trunk_medium.csv', 'min')
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'LOW')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/min_trunk_low.csv', 'min')
+
+def trunk_max_processing():
+    folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'CONTROL')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_trunk_control.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'HIGH')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_trunk_high.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'MEDIUM')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_trunk_medium.csv', 'max')
+    files_list = list_csv_files_in_folder(folder, False, 'TRUNK', 'LOW')
+    minmax_angle_list(files_list, 0, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_trunk_low.csv', 'max')
+
+
 #####################
 ### WORKING SPACE ###
 #####################
 
-# Run if needed
-rawdata_batch_interpolation()
+# # # Run if needed
+# rawdata_batch_interpolation()
 
-# Batch longitudinal plots
-batch_individual_line_plots()
-batch_individual_line_plots_trunk()
+# # # Batch longitudinal plots
+# batch_individual_line_plots()
+# batch_individual_line_plots_trunk()
 
-# Batch comparison plots
-batch_logitudinal_comparison()
+# # # Batch comparison plots
+# batch_logitudinal_comparison()
 
-folder = '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/data_interpolated'
-files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'CONTROL')
-minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_control.csv', 'max')
-files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'HIGH')
-minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_high.csv', 'max')
-files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'MEDIUM')
-minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_medium.csv', 'max')
-files_list = list_csv_files_in_folder(folder, False, 'KNEE', 'LOW')
-minmax_angle_list(files_list, 300, 501, '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed/max_knee_swingphase_low.csv', 'max')
+# # Batch min/max processing
+# knee_max_stance_processing()
+# knee_max_swing_processing()
+# hip_max_processing()
+# hip_min_processing()
+# ankle_toeoff_max_processing()
+# ankle_toeoff_min_processing()
+# trunk_min_processing()
+# trunk_max_processing()
 
-create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
+# create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
+# create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_HIP.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_HIP.png', 'Maximum Hip Flexion Angle During Gait Cycle', 'Bag Position', 'Angle (deg)')
