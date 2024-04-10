@@ -520,25 +520,25 @@ def trunk_max_processing():
 ### WORKING SPACE ###
 #####################
 
-# # # Run if needed
-# rawdata_batch_interpolation()
+# # Run if needed
+rawdata_batch_interpolation()
 
-# # # Batch longitudinal plots
-# batch_individual_line_plots()
-# batch_individual_line_plots_trunk()
+# # Batch longitudinal plots
+batch_individual_line_plots()
+batch_individual_line_plots_trunk()
 
-# # # Batch comparison plots
-# batch_logitudinal_comparison()
+# # Batch comparison plots
+batch_logitudinal_comparison()
 
-# # Batch min/max processing
-# knee_max_stance_processing()
-# knee_max_swing_processing()
-# hip_max_processing()
-# hip_min_processing()
-# ankle_toeoff_max_processing()
-# ankle_toeoff_min_processing()
-# trunk_min_processing()
-# trunk_max_processing()
+# Batch min/max processing
+knee_max_stance_processing()
+knee_max_swing_processing()
+hip_max_processing()
+hip_min_processing()
+ankle_toeoff_max_processing()
+ankle_toeoff_min_processing()
+trunk_min_processing()
+trunk_max_processing()
 
 # create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
 # create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_HIP.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_HIP.png', 'Maximum Hip Flexion Angle During Gait Cycle', 'Bag Position', 'Angle (deg)')
