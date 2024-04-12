@@ -331,6 +331,9 @@ def longitudinal_comparison(folder_path, joint_descriptor, save_filepath, title=
     # Define colors for different types of data
     colors = {'CONTROL': 'blue', 'HIGH': 'green', 'MEDIUM': 'orange', 'LOW': 'purple'}
     
+    # Sort csv_files based on the order of types
+    csv_files.sort(key=lambda x: ['LOW', 'MEDIUM', 'HIGH', 'CONTROL'].index(x.split('_')[1]))
+    
     # Initialize a matplotlib figure
     fig, ax = plt.subplots()
 
@@ -528,17 +531,18 @@ def trunk_max_processing():
 # batch_individual_line_plots_trunk()
 
 # # # Batch comparison plots
-# batch_logitudinal_comparison()
+batch_logitudinal_comparison()
 
-# Batch min/max processing
-knee_max_stance_processing()
-knee_max_swing_processing()
-hip_max_processing()
-hip_min_processing()
-ankle_toeoff_max_processing()
-ankle_toeoff_min_processing()
-trunk_min_processing()
-trunk_max_processing()
+# # Batch min/max processing
+# knee_max_stance_processing()
+# knee_max_swing_processing()
+# hip_max_processing()
+# hip_min_processing()
+# ankle_toeoff_max_processing()
+# ankle_toeoff_min_processing()
+# trunk_min_processing()
+# trunk_max_processing()
 
 # create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_SWING_KNEE.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_SWING_KNEE.png', 'Maximum Knee Joint Angle During Swing Phase', 'Bag Position', 'Angle (deg)')
 # create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MAX_HIP.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MAX_HIP.png', 'Maximum Hip Flexion Angle During Gait Cycle', 'Bag Position', 'Angle (deg)')
+# create_boxplot('/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/processed_compiled/MEAN_TRUNK.csv', '/Users/nigelfoo/Documents/bn6202-g02-dataprocessing/bn6202-g02-dataprocessing/figures/MEAN_TRUNK.png', 'Mean Trunk Flexion Angle During Gait Cycle', 'Bag Position', 'Angle (deg)')
